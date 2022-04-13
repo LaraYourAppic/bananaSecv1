@@ -6,11 +6,10 @@ import {AuthContext} from "../context/AuthContext/AuthContext";
 function NavBar() {
   const history = useHistory();
   const {auth, logout} = useContext(AuthContext)
-  console.log(auth);
 
   return (
-    <nav>
-        <Link to="/">
+      <nav>
+          <Link to="/">
           <span className="logo-container">
             <img src={logo} alt="logo"/>
             <h3>
@@ -38,8 +37,7 @@ function NavBar() {
         onClick={logout}
         >LogOut
         </button>
-        }
-
+            }
       </div>
     </nav>
   );

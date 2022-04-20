@@ -5,7 +5,7 @@ import axios from "axios";
 function SignUp() {
 
     const [email, setEmail] = useState('');
-    const [usename, setUseName]= useState('');
+    const [username, setUseName]= useState('');
     const [password,setPassWord] = useState('');
     const history = useHistory();
 
@@ -13,7 +13,7 @@ function SignUp() {
         e.preventDefault()
         try {
             await axios.post("http://localhost:3000/register",
-                {email:email,password:password, usename:usename}
+                {email:email,password:password, username:username}
         )
             history.push('/signin');
         } catch (error) {
@@ -35,7 +35,7 @@ function SignUp() {
             </label>
             <label htmlFor="username">Username
                 <input type="text" id="username"
-                       onChange={(e)=> setUseName(e.target.value)} value={usename}/>
+                       onChange={(e)=> setUseName(e.target.value)} value={username}/>
             </label>
             <button type="submit"
             >Registreren</button>

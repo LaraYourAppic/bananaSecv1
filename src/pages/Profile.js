@@ -1,26 +1,53 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import {AuthContext} from "../context/AuthContext/AuthContext";
+import axios from "axios";
 
 
 function Profile() {
     const {isUser} = useContext(AuthContext)
+    const [privateData, setPrivateData] = useState ('')
 
-    return (
-    <>
-      <h1>Profielpagina</h1>
-      <section>
-        <h2>Gegevens</h2>
-        <p><strong>Gebruikersnaam:</strong>{isUser.usename}</p>
-        <p><strong>Email:</strong> {isUser.email}</p>
-      </section>
-      <section>
-        <h2>Strikt geheime profiel-content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
-      </section>
-      <p>Terug naar de <Link to="/">Homepagina</Link></p>
-    </>
-  );
-}
+
+    useEffect(()=>{
+       async function getPrivateData(){
+           const token = localStorage.getItem('token')
+           try{
+               const result = await axios.get ("http://localhost:3000/660/private-content",
+                   {headers: {
+                           "Content-Type": "application/json",
+                           Authorization: `Bearer ${token}`,
+
+                       }})
+               console.log(result)
+               setPrivateData(result.data)
+
+
+           }catch (e){
+               console.error (e)
+           }
+       }
+       getPrivateData()
+
+
+    },[])
+
+
+        return (
+            <>
+                <h1>Profielpagina</h1>
+                <section>
+                    <h2>Gegevens</h2>
+                    <p><strong>Gebruikersnaam:</strong>{isUser.username}</p>
+                    <p><strong>Email:</strong> {isUser.email}</p>
+                </section>
+                <section>
+                    <h2>{privateData.title}</h2>
+                    <p>{privateData.content}</p>
+                </section>
+                <p>Terug naar de <Link to="/">Homepagina</Link></p>
+            </>
+        );
+    }
 
 export default Profile;

@@ -30,8 +30,11 @@ useEffect(()=>{
 
 async function getUserData(id,token){
         try{
-            const result = await axios.get(`http://localhost:3000/600/users/${id}`,{ headers:{ "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`}})
+            const result = await axios.get(`http://localhost:3000/600/users/${id}`,{
+                headers:{
+                    "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+                }})
             console.log(result)
 
             toggleIsAuth({...isAuth,
@@ -40,7 +43,8 @@ async function getUserData(id,token){
                 user:{
                     id: result.data.id,
                     email: result.data.email,
-                    usename: result.data.usename,
+                    username: result.data.username,
+
                 }
             })
         }catch (error){
@@ -62,7 +66,8 @@ async function getUserData(id,token){
         localStorage.getItem(jwt);
        toggleIsAuth(
             {...isAuth,
-                isAuth:false,user:null})
+                isAuth:false,
+                user:null})
         console.log('gebruiker is uitgelogd')
         history.push('/')
     }
